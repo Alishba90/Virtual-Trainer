@@ -37,7 +37,7 @@ def track():
     
 
     """Video streaming generator function."""
-    cap = cv2.VideoCapture(2)
+    cap = cv2.VideoCapture(0)
     with my_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened():
             success, img = cap.read()
@@ -52,17 +52,20 @@ def track():
             
             
             
-            landmarks = results.pose_landmarks.landmark
+            try:            
+                landmarks = results.pose_landmarks.landmark
+                    
                 
+                
+                shoulder = [landmarks[my_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[my_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+                elbow = [landmarks[my_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[my_pose.PoseLandmark.LEFT_ELBOW.value].y]
+                wrist = [landmarks[my_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[my_pose.PoseLandmark.LEFT_WRIST.value].y]
+                
+                angle = calculate_angle(shoulder, elbow, wrist)
+                cv2.putText(img, str(angle), (70, 50), cv2.FONT_HERSHEY_TRIPLEX, 3, (255, 0, 0), 3)
+            except:
+                pass
             
-            
-            shoulder = [landmarks[my_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[my_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-            elbow = [landmarks[my_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[my_pose.PoseLandmark.LEFT_ELBOW.value].y]
-            wrist = [landmarks[my_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[my_pose.PoseLandmark.LEFT_WRIST.value].y]
-            
-            angle = calculate_angle(shoulder, elbow, wrist)
-            
-            # print(result.pose_landmarks)
             mp_drawing.draw_landmarks(img, results.pose_landmarks, my_pose.POSE_CONNECTIONS,
                                 mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
                                 mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2) 
