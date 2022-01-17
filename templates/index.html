@@ -1,0 +1,49 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Pose Estimation</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<!-- As a link -->
+
+
+<h1 style="font-size: 2em;position: fixed;z-index: 3000;top:10%;margin-left: 3%;">Virtual Trainer</h1>
+
+
+<button style=" position: fixed;z-index: 6000;margin-top:82vh;color:white;width: 8vw;height: 5vh;border-radius: 10px;background-color: rgb(73, 133, 156);outline: none;margin-left: 2vw;">Start</button>
+
+<button style=" position: fixed;z-index: 6000;margin-top:90vh;color:white;width: 8vw;height: 5vh;border-radius: 10px;background-color: rgb(73, 133, 156);outline: none;margin-left: 2vw;">Stop</button>
+
+
+ <div class="mx-auto" style="width: 700px;">
+  <img id="display" src="{{ url_for('video_feed') }}">
+</div>
+<script>
+function getWidth() {
+  return Math.max(
+    document.body.scrollWidth,
+    document.documentElement.scrollWidth,
+    document.body.offsetWidth,
+    document.documentElement.offsetWidth,
+    document.documentElement.clientWidth
+  );
+}
+
+function getHeight() {
+  return Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight,
+    document.documentElement.clientHeight
+  );
+}
+
+var i =document.getElementById('display');
+i.style.width=getWidth()
+i.style.height=getHeight()
+</script>
+</body>
+</html>
