@@ -102,8 +102,8 @@ def index():
 def instruct():
     
         back=session['back']
-        b=["Hold your camera in a position that your shoulder, elbows and wrists are visible","Click the start Button for your training.To change arms, click the right or left button placed at the bottom of the screen","The total reps are displayed at the bottom of the screen","The green flashes indicate the correct poses .Move your arm up to your shoulder until the light flashes and down similarly.","When youre done click the stop button"]
-        l=["Hold your camera in a position that your shoulder, hips and wrists are visible","Click the start Button for your training","The total reps are displayed at the bottom of the screen","The green flashes indicate the correct poses .Move your arms up perpendicularly until the light flashes and down similarly.","When youre done click the stop button"]
+        b=["Hold your camera in a position that your shoulder, elbows and wrists are visible.Click the start Button for your training.To change arms, click the right or left button placed at the bottom of the screen.The total reps are displayed at the bottom of the screen","The green flashes indicate the correct poses .Move your arm up to your shoulder until you make less than 10 degree between your shoulder elbow and wristand  the light flashes and move them down to 180 degree similarly.When youre done click the stop button"]
+        l=["Hold your camera in a position that your shoulder, hips and wrists are visible.Click the start Button for your training .The total reps are displayed at the bottom of the screen","The green flashes indicate the correct poses .Move your arms up perpendicularly untilyou make 90 degree between elbow shoulder and hips and the light flashes and move your arms down to 0 degree similarly.When youre done click the stop button"]
         
 
         if(request.method=='POST'):
@@ -122,19 +122,15 @@ def instruct():
                 if(session['excersise']=="Lateral Raise"):
                     i1=l[0]
                     i2=l[1]
-                    i3=l[2]
-                    i4=l[3]
-                    i5=l[4]
+                    inst_img="../static/images/lateralextension.jpeg"
                     
                 elif(session['excersise']=="Bicep Curl"):
                     i1=b[0]
                     i2=b[1]
-                    i3=b[2]
-                    i4=b[3]
-                    i5=b[4]
+                    inst_img="../static/images/bicepcurl.jpeg"
                 back="inst"
                 session['back']=back
-                return render_template('instructions.html',excersise=session["excersise"],i1=i1,i2=i2,i3=i3,i4=i4,i5=i5)
+                return render_template('instructions.html',excersise=session["excersise"],i1=i1,i2=i2,inst_img=inst_img)
             else:
                 return redirect("welcome")
 
@@ -190,16 +186,14 @@ def s():
 def changearm1():
     
         session['arm']='Right Arm '
-        r.setright(True)
-        r.setleft(False)
+     
         return render_template('bicep.html',signal=session['signal'],arm=session['arm'])
     
 @app.route('/left',methods=('GET','POST'))
 def changearm():
      
             session['arm']='Left Arm '
-            r.setright(False)
-            r.setleft(True)
+      
             return render_template('bicep.html',signal=session['signal'],arm=session['arm'])
 
 
